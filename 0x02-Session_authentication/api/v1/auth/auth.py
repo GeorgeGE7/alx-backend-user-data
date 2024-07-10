@@ -12,7 +12,7 @@ class Auth:
     Class for managing authentication in API
     """
 
-    def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
+    def require_auth(self, uri: str, excluded_uris: List[str]) -> bool:
         """
         Check if path is not in excluded paths
 
@@ -23,17 +23,17 @@ class Auth:
         Returns:
             bool: True if path is not in excluded paths, False otherwise
         """
-        if not path or not excluded_paths:
+        if not uri or not excluded_uris:
             return True
 
-        path = path.rstrip("/") + "/"
-        excluded_paths = [p.rstrip("/") + "/" for p in excluded_paths]
+        uri = uri.rstrip("/") + "/"
+        excluded_uris = [p.rstrip("/") + "/" for p in excluded_uris]
 
-        for excluded_path in excluded_paths:
-            if path.startswith(excluded_path):
+        for excluded_path in excluded_uris:
+            if uri.startswith(excluded_path):
                 return False
 
-        if path in excluded_paths:
+        if uri in excluded_uris:
             return False
         return True
 
