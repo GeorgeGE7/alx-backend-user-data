@@ -15,7 +15,7 @@ app = Flask(__name__)
 
 
 @app.route("/users", methods=["POST"], strict_slashes=False)
-def create_users() -> str:
+def users() -> str:
     """Register a user and return a JSON response"""
     body_password = request.form.get("password")
     body_email = request.form.get("email")
@@ -27,7 +27,7 @@ def create_users() -> str:
 
 
 @app.route("/sessions", methods=["POST"], strict_slashes=False)
-def login_user():
+def login():
     """Validate user credentials and return a JSON response"""
     req = request.form
     body_password = req.get("password", "")
@@ -43,9 +43,9 @@ def login_user():
 @app.route("/sessions", methods=["DELETE"], strict_slashes=False)
 def logout():
     """Delete the session ID"""
-    session_cookie = request.cookies.get("session_id", None)
-    user_from_session = AUTH.get_user_from_session_id(session_cookie)
-    if session_cookie is None or user_from_session is None:
+    session_id = request.cookies.get("session_id", None)
+    user_from_session = AUTH.get_user_from_session_id(session_id)
+    if session_id is None or user_from_session is None:
         abort(403)
     AUTH.destroy_session(user_from_session.id)
     return redirect("/")
