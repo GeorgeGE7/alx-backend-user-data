@@ -52,7 +52,7 @@ def logout():
 
 
 @app.route("/profile", methods=["GET"], strict_slashes=False)
-def get_profile() -> str:
+def profile() -> str:
     """Return user information if session ID is valid"""
     u_cookie = request.cookies.get("session_id", None)
     user = AUTH.get_user_from_session_id(u_cookie)
@@ -62,7 +62,7 @@ def get_profile() -> str:
 
 
 @app.route("/reset_password", methods=["POST"], strict_slashes=False)
-def get_reset_password_token_route() -> str:
+def get_reset_password_token() -> str:
     """Return a reset password token if the email is registered"""
     user_req = request.form
     body_emai = user_req.get("email", "")
